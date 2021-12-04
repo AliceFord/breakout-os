@@ -9,3 +9,4 @@ Video memory is the same size as max code size
 load every cylinder that has to be used
 custom jumping to 0x7ce0
 writing to 32-bit address 0xa0000 in 16-bit mode
+had to manually write machine code with opcodes from a website
