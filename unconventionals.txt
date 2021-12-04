@@ -1,0 +1,11 @@
+Unconventional things:
+Custom bootloader
+16-bit kernel
+Custom linker
+256 colours WOW
+Video memory is the same size as max code size
+320x200
+64kb max size
+load every cylinder that has to be used
+custom jumping to 0x7ce0
+writing to 32-bit address 0xa0000 in 16-bit mode
