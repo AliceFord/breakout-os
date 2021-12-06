@@ -5,49 +5,60 @@ mov ah, 0x0
 mov al, 0x13
 int 0x10
 
-xor ax,ax
-mov ds,ax
-mov es,ax
-
-mov bx,0x8000
+mov bx,0x7c00 ; Stack location
 cli
 mov ss,bx
-mov sp,ax
+mov sp,bx ; stack pointer
+mov bp,bx ; base pointer
 sti
 
 cld
 clc
 
-; xor ah,ah
-; int 0x13
+xor ah,ah
+int 0x13 ; Reset drive system
 ; mov bx,0x07E0
 ; mov es,bx
 ; xor bx,bx
+xor bx, bx
+mov es, bx
 mov ah,0x2 ;function
-mov al,0x5 ;sectors to read
-mov ch,0x0 ;track
+mov al,0x2 ;sectors to read
+mov ch,0x0 ;cylinder
 mov cl,0x2 ;sector
 mov dh,0x0 ;head
+mov bx, 0x7e00 ; offset
 int 0x13
+jc disk_error
 
+xor ax, ax
+mov ds, ax
+mov es, ax
+; mov ss, ax
 
+jmp bx
+nop
 
+; mov ax,0x4c00
+; mov ds,ax
+; mov es,ax
 
-; error:
-;     xor bx,bx
-;     mov ax,0xa000
-;     mov es,ax
-;     mov ah,0x40 ;colour
-;     mov al,' ' ;character
-;     .red:
-;         cmp bx,0x0FA0
-;         je .end
-;         mov WORD [es:bx], ax
-;         inc bx
-;         jmp .red
-;     .end:
-;         jmp $+10
-;         cli
-;         hlt
+disk_error:
+    xor bx,bx
+    mov ax,0xa000
+    mov es,ax
+    mov ah,0x40 ;colour
+    mov al,' ' ;character
+    .red:
+        cmp bx,0x0FA0
+        je .end
+        mov WORD [es:bx], ax
+        inc bx
+        jmp .red
+    .end:
+        cli
+        hlt
 
-times 0x1FB - ($ - $$) db 0x0
+times 510 - ($ - $$) db 0
+db 0x55
+db 0xaa

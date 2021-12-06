@@ -4,7 +4,7 @@ assembly:
 	python dodgy.py
 
 real:
-	/mnt/c/users/olive/Desktop/coding/os2/osb/opt/cross/bin/i686-elf-gcc -ffreestanding -nostdlib -lgcc -c -m16 kernel2.c -o kernel.o
+	/mnt/c/users/olive/Desktop/coding/os2/osb/opt/cross/bin/i686-elf-gcc -fno-pic -ffreestanding -nostdlib -lgcc -c -m16 kernel2.c -o kernel.o
 	python3 superdodgy.py
 	nasm boot3.asm -fbin -o boot.bin
 	python3 disassemblyToOpcodes.py
